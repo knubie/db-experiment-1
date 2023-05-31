@@ -1,0 +1,27 @@
+{:dependencies [[org.clojure/core.async     "0.7.559"]
+                [com.cognitect/transit-cljs "0.8.256"]]
+
+ :source-paths ["src" "test"]
+ 
+ :builds
+ {:bento {:target :browser
+          :output-dir "build/js"
+          :asset-path "/js"
+          :devtools {:http-port 8080
+                     :http-root "build"}
+          :compiler-options {:source-map true}
+          :modules {:index {:entries [bento.db]}}}
+
+  :test {:target    :browser-test
+         :test-dir  "build/test"
+         :ns-regexp "test"
+         :compiler-options {:source-map true}
+         :devtools  {:http-port 8021
+                     :http-root "build/test"}}
+
+  :example-server {:target           :node-script
+                   :output-to        "server/index.js"
+                   :main             examples.talk.server.core/main
+                   :compiler-options {:optimizations   :simple
+                                      :source-map      true}
+                   :devtools {:preloads [devtools.preload]}}}}
